@@ -1,0 +1,19 @@
+# AI Hedge Fund Skill V2 - 核心依赖
+# 安装: pip install -r requirements.txt
+
+# Core dependencies - 必需
+pandas>=2.0.0
+numpy>=1.24.0
+requests>=2.28.0
+python-dotenv>=0.19.0
+
+# WebSocket for real-time data - 必需
+websocket-client>=1.4.0
+
+# Data validation - 必需
+pydantic>=2.0.0
+
+# Optional dependencies (uncomment if needed):
+# matplotlib>=3.5.0          # 数据可视化
+# plotly>=5.10.0             # 交互式图表
+# redis>=4.3.0               # Redis缓存
