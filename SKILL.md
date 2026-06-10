@@ -44,20 +44,20 @@ An AI-powered hedge fund team that simulates 12 legendary investors in formal co
 
 ## 🏛️ The 12-Member Investment Committee
 
-| # | Member | Firm / Era | Core Philosophy | Code Status |
-|---|--------|------------|-----------------|-------------|
-| 1 | **Warren Buffett** | Berkshire Hathaway | Value: wonderful companies at fair prices | ✅ `buffett_distilled_v2.py` |
-| 2 | **Charlie Munger** | Berkshire Hathaway | Mental Models + Invert, Always Invert | ⚠️ Concept (no code file) |
-| 3 | **Ben Graham** | Graham-Newman | Margin of Safety + Mr. Market | ✅ `ben_graham_distilled_v2.py` |
-| 4 | **Ray Dalio** 🔥 | Bridgewater Associates | Principles + All-Weather + Economic Machine | ✅ `dalio_distilled_v2.py` (32KB) |
-| 5 | **Cathie Wood** 🔥 | ARK Invest | Disruptive Innovation + Wright's Law + 5Y Horizon | ✅ `cathie_wood_distilled_v2.py` |
-| 6 | **Bill Ackman** | Pershing Square | Activist + Concentrated + Moat | ✅ `ackman_distilled_v2.py` |
-| 7 | **Stanley Druckenmiller** | Duquesne Capital | Asymmetric Bets + Liquidity + Flexibility | ✅ `druckenmiller_distilled_v2.py` |
-| 8 | **George Soros** | Quantum Fund | Reflexivity + Boom/Bust + Bold Bets | ✅ `soros_distilled_v2.py` |
-| 9 | **Paul Tudor Jones** | Tudor Investment | Macro Cycles + Risk Management + Trend | ✅ `jones_pt_distilled_v2.py` |
-| 10 | **Jim Simons** | Renaissance Technologies | Quantitative + Data-driven + Statistical Arbitrage | ✅ `simons_distilled_v2.py` |
-| 11 | **Technical Analyst** | — | Price Action + Indicators + Volume | ✅ `ai_hedge_fund.py` |
-| 12 | **Risk Manager** | — | Volatility + Position Sizing + Drawdown Control | ✅ `ai_hedge_fund.py` |
+| # | Member | Firm / Era | Core Philosophy | Data Dependency | Code Status |
+|---|--------|------------|-----------------|-----------------|-------------|
+| 1 | **Warren Buffett** | Berkshire Hathaway | Value: wonderful companies at fair prices | Earnings + Dividend | ✅ `buffett_distilled_v2.py` |
+| 2 | **Charlie Munger** | Berkshire Hathaway | Mental Models + Invert, Always Invert | Earnings 质量 | ⚠️ Concept |
+| 3 | **Ben Graham** | Graham-Newman | Margin of Safety + Mr. Market | Earnings + Dividend | ✅ `ben_graham_distilled_v2.py` |
+| 4 | **Ray Dalio** 🔥 | Bridgewater Associates | Principles + All-Weather + Economic Machine | **VIX + Macro + 利差** | ✅ `dalio_distilled_v2.py` (32KB) |
+| 5 | **Cathie Wood** 🔥 | ARK Invest | Disruptive Innovation + Wrights Law | **TAM + 成本曲线** | ✅ `cathie_wood_distilled_v2.py` |
+| 6 | **Bill Ackman** | Pershing Square | Activist + Concentrated + Moat | Earnings + Wall St. | ✅ `ackman_distilled_v2.py` |
+| 7 | **Stanley Druckenmiller** | Duquesne Capital | Asymmetric Bets + Liquidity + Flexibility | **VIX + Macro + Wall St.** | ✅ `druckenmiller_distilled_v2.py` |
+| 8 | **George Soros** | Quantum Fund | Reflexivity + Boom/Bust + Bold Bets | **VIX + Macro** | ✅ `soros_distilled_v2.py` |
+| 9 | **Paul Tudor Jones** | Tudor Investment | Macro Cycles + Risk + Trend | **VIX + Macro + Correlation** | ✅ `jones_pt_distilled_v2.py` |
+| 10 | **Jim Simons** | Renaissance Technologies | Quantitative + Stat Arb + Data-driven | **VIX + Correlation** | ✅ `simons_distilled_v2.py` |
+| 11 | **Technical Analyst** | — | Price Action + Indicators + Volume | **VIX + Volume** | ✅ `ai_hedge_fund.py` |
+| 12 | **Risk Manager** | — | Volatility + Position Sizing + VaR | **VIX + Macro + Correlation** | ✅ `ai_hedge_fund.py` |
 
 ### Reserved Agents (22 Total Implementations)
 
@@ -72,26 +72,33 @@ The skill supports 22 total distilled agent implementations in the `_distilled_v
 User Request
     │
     ▼
-┌─────────────────┐
-│  Data Fetcher   │ ← Yahoo Finance / API / yfinance
-└────────┬────────┘
+┌─────────────────────────────────────────────┐
+│  📊 Phase 0: Data Canvas (客观数据画布)       │
+│  ┌──────────┬──────────┬──────────┬────────┐ │
+│  │  Macro   │ Earnings │ Wall St. │Dividend│ │
+│  │VIX/EFFR/ │EPS/Rev/  │Ratings/  │Yield/  │ │
+│  │利差/风格  │质量      │Target/   │Payout/ │ │
+│  │          │          │Momentum  │Growth  │ │
+│  └──────────┴──────────┴──────────┴────────┘ │
+│  ↓ 所有委员必须引用Data Canvas中的相关指标 ↓  │
+└─────────────────────────────────────────────┘
          │
     ┌────┴────┬────────┬────────┬────────┬────────┬────────┬────────┬────────┬────────┬────────┬────────┬────────┐
     ▼         ▼        ▼        ▼        ▼        ▼        ▼        ▼        ▼        ▼        ▼        ▼
 ┌───────┐┌───────┐┌───────┐┌───────┐┌───────┐┌───────┐┌───────┐┌───────┐┌───────┐┌───────┐┌───────┐┌───────┐
 │Buffett││Munger ││Graham ││ Dalio ││ Wood  ││Ackman ││Druck. ││ Soros ││ Jones ││Simons ││  Tech ││ Risk  │
+│Earn+Di││Earn质 ││Earn+Di││VIX+Mac││TAM+Wri││Earn+WS││VIX+Mac││VIX+Mac││VIX+Mac││VIX+Cor││VIX+Vol││VIX全部│
 └───┬───┘└───┬───┘└───┬───┘└───┬───┘└───┬───┘└───┬───┘└───┬───┘└───┬───┘└───┬───┘└───┬───┘└───┬───┘└───┬───┘
     │         │         │         │         │         │         │         │         │         │         │         │
     └─────────┴────┬────┴─────────┴─────────┴─────────┴─────────┴─────────┴─────────┴─────────┴────┬────┴─────────┘
                    │                                                                                │
           ┌────────▼────────┐                                                              ┌───────▼───────┐
-          │ Investment      │ ← 12 parallel sub-agents                                       │ Supporting    │
-          │ Committee       │    aggregate into consensus                                   │ Agents        │
-          │ (Debate Mode)   │                                                               │ Earnings      │
-          └────────┬────────┘                                                               │ Wall Street   │
-                   │                                                                        │ Macro         │
-          ┌────────▼────────┐                                                               │ Dividend      │
-          │Portfolio Manager│ ← Final recommendation                                        └───────────────┘
+          │ 12人委员会辩论    │ ← 强制引用各自的数据维度                                        │ 🟢 ESG Bonus │
+          │ Phase 1-3        │                                                               │ 达标+1票     │
+          └────────┬────────┘                                                               │ 不达标不影响  │
+                   │                                                                        └───────────────┘
+          ┌────────▼────────┐
+          │Portfolio Manager│ ← Phase 4 终审 + 五档仓位
           └─────────────────┘
 ```
 
@@ -104,16 +111,27 @@ User Request
 Every analysis follows a structured debate protocol:
 
 ```
+Phase 0: 📊 数据画布 (Data Canvas) — 必须先建立共识事实
+  → Macro Strategist: VIX regime + SPY/QQQ趋势 + 市场风格(Risk-On/Off/Choppy)
+  → Earnings Analyst: EPS惊喜率/营收增速/盈利质量
+  → Wall Street Consensus: 分析师评级分布/目标价涨跌空间/评级调整动能
+  → Dividend Investor: 股息率历史区间/支付安全度/增长CAGR
+  ↓
+  输出: 一份所有委员都必须引用的《客观数据画布》
+  (没有数据画布 = 不准开始辩论!)
+
 Phase 1: Individual Analysis (parallel)
   → Each of the 12 members independently analyzes the ticker
+  → 🔴 强制引用规则: 每位委员必须引用Data Canvas中的相关指标
   → Output: signal (bullish/bearish/neutral) + confidence (0-100) + reasoning
+  → 委员→指标映射 (见下方) : 谁必须用什么数据
 
 Phase 2: Debate Session
-  → Bullish members make their case
-  → Bearish members challenge with contrarian views
+  → Bullish members make their case (用数据支撑!)
+  → Bearish members challenge with contrarian views (用数据质疑!)
   → Neutral members moderate and identify key uncertainties
-  → Cross-examination: Ray Dalio challenges everyone's macro assumptions
-  → Cathie Wood challenges everyone's innovation blindness
+  → Cross-examination: Ray Dalio challenges everyone's macro assumptions (引用VIX/EFFR/利差)
+  → Cathie Wood challenges everyone's innovation blindness (引用TAM/成本曲线)
 
 Phase 3: Consensus Building
   → InvestmentCommittee.analyze() calculates:
@@ -125,7 +143,31 @@ Phase 3: Consensus Building
 Phase 4: Portfolio Manager Final Recommendation
   → Synthesizes committee output + Risk Manager allocation
   → Output: 20%/15%/10%/5% tiered position sizing
+  → 🟢 ESG Bonus: 不是核心投票, 达标+1票/不达标不影响 (附加分)
 ```
+
+### 🔴 委员→数据指标强制引用映射
+
+**每位委员在Phase 1分析时，必须引用指定数据维度的Data Canvas指标——否则分析无效！**
+
+| 委员 | 必须引用的数据维度 | 具体指标 |
+|------|-------------------|---------|
+| **Buffett** | Earnings + Dividend | ROE>15%? 盈利稳定性? 股息20年+? |
+| **Munger** | Earnings 质量 | 应计比率? 经常性vs一次性? ROIIC? |
+| **Graham** | Earnings + Dividend | PE<15? PB<1.5? 流动比率>2? 股息记录? |
+| **Dalio** 🔥 | **VIX + Macro + 利差** | VIX regime? EFFR? 10Y-3M利差? 市场风格? |
+| **Wood** 🔥 | **TAM + 成本曲线** | 5年TAM? Wright's Law学习率? S曲线位置? |
+| **Ackman** | Earnings + Wall St. | ROIC>WACC? 分析师分歧? 目标价空间? |
+| **Druckenmiller** | **VIX + Macro + Wall St.** | 流动性信号? 联储姿态? 盈利加速度? |
+| **Soros** | **VIX + Macro** | 反身性信号? 繁荣/萧条阶段? 认知背离? |
+| **Jones** | **VIX + Macro + Correlation** | 跨市场信号? 情绪极端? 波动率体制? |
+| **Simons** | **VIX + Correlation** | 均值回归? 动量? 统计显著性p<0.01? |
+| **Technical** | **VIX + Volume** | RSI/MACD/MA? VIX配合量价确认? |
+| **Risk Manager** | **VIX + Macro + Correlation** | Sharpe? VaR? 最大回撤? 相关性矩阵? |
+
+> 🔴 **VIX是宏观派委员的生命线** — Dalio/Druckenmiller/Soros/Jones 没有VIX=瞎眼分析
+> 🔵 **Earnings是价值派委员的氧气** — Buffett/Munger/Graham/Ackman 没有盈利数据=无的放矢
+> 🟢 **ESG是附加分不是考核指标** — 不参与核心投票，达标+1票bonus
 
 ### Consensus Classification
 
@@ -968,30 +1010,110 @@ ARK用:
 
 ---
 
-## Supporting Analysis Modules
+## 📊 Data Canvas — 客观数据画布（Phase 0 强制输出）
 
-These agents provide data inputs to the committee but do not vote:
+> **这是所有委员分析的共同事实基础。没有Data Canvas = 不准开始辩论！**
 
-### Earnings Analyst
-- EPS surprises (actual vs expected, beat rate)
-- Revenue growth trajectory
-- Earnings quality (accruals ratio, recurring vs one-time)
+Data Canvas 不投票，但它提供**所有委员必须引用的客观数据**。每位委员在Phase 1分析时，必须引用其分配的数据维度（见上方的委员→指标映射表）。
 
-### Wall Street Consensus
-- Analyst ratings distribution (strong_buy → strong_sell)
-- Price target vs current (upside/downside %)
-- Estimate revision momentum (upgrades vs downgrades recent 30 days)
+### 1. Macro Strategist — 宏观环境画布 🔴
+**这是8位委员的强制依赖！**（Dalio/Druckenmiller/Soros/Jones/Simons/Technical/Risk Manager + Ackman间接）
 
-### Macro Strategist
-- VIX regime classification
-- SPY/QQQ trend and breadth
-- Cross-asset correlation signals
-- Market regime: Risk-On / Risk-Off / Choppy
+```
+输出指标:
+├── VIX Regime: Low(<15) / Normal(15-25) / Elevated(25-35) / Fear(35+)
+├── EFFR (有效联邦基金利率): 当前值 + 趋势
+├── 10Y-3M Spread: 利差方向 + 是否倒挂
+├── SPY/QQQ 趋势: 20MA/50MA/200MA 方向 + 广度(Breadth)
+├── 市场风格: Risk-On / Risk-Off / Choppy
+├── 跨资产关联: 美元↑股票↓? 黄金↑债券↓?
+└── 联储姿态: Tightening / Neutral / Loosening / Pushing on String
 
-### Dividend Investor
-- Yield analysis (current vs historical range)
-- Payout ratio safety
-- Dividend growth consistency and CAGR
+🔴 强制引用规则:
+   Dalio: 必须基于EFFR+利差判断债务周期位置
+   Druckenmiller: 必须基于VIX regime+联储姿态决定仓位倍数
+   Jones/Soros: 必须基于市场风格+跨资产信号判断情绪极端
+   Simons: 必须基于VIX regime判断统计模型的可信度
+   Risk Manager: 必须在VaR计算中加入VIX体制因素
+   Technical: 必须用VIX确认量价信号的可靠性
+```
+
+### 2. Earnings Analyst — 盈利质量画布 🔵
+**这是5位委员的强制依赖！**（Buffett/Munger/Graham/Ackman/Druckenmiller）
+
+```
+输出指标:
+├── EPS Surprise: 最近4季度的惊喜率 + Beat Rate
+├── Revenue Growth: YoY + QoQ 轨迹
+├── Earnings Quality: 应计比率 / 经常性利润占比 / FCF转换率
+├── Margins: Gross/Operating/Net 趋势
+├── ROE/ROIC: vs WACC + vs 行业平均
+└── Guidance: 管理层指引 vs 分析师预期
+
+🔵 强制引用规则:
+   Buffett: 必须看ROE>15%持续5年+? 盈利是否稳定可预测?
+   Munger: 必须算应计比率, 区分经常性vs一次性利润
+   Graham: 必须验PE<15? 盈利是否真实而非会计游戏?
+   Ackman: 必须算ROIC>WACC? 收益质量是否支撑激进仓位?
+   Druckenmiller: 必须看盈利加速度(二阶导)是否匹配宏观判断
+```
+
+### 3. Wall Street Consensus — 共识分歧画布
+**这是3位委员的强制依赖！**（Ackman/Druckenmiller + Wood作为反向指标）
+
+```
+输出指标:
+├── 评级分布: Strong Buy / Buy / Hold / Sell / Strong Sell (%)
+├── 目标价涨跌空间: Consensus target vs Current (%)
+├── 评级调整动能: 近30天升级vs降级数量
+├── 分析师分歧度: 目标价标准差(越大=越分歧)
+└── 惊喜动量: 最近一次EPS beat/miss后股价反应
+
+🔵 强制引用规则:
+   Ackman: 分析师分歧在哪? 为什么市场错了?
+   Druckenmiller: 共识是否拥挤? 评级调整方向vs价格方向背离=信号
+   Wood: 华尔街共识看空我们的持仓→好! 认知差=超额回报
+```
+
+### 4. Dividend Investor — 股息安全画布
+**这是3位委员的强制依赖！**（Buffett/Graham + Risk Manager）
+
+```
+输出指标:
+├── 股息率: Current Yield vs 5年历史区间
+├── 支付率: Payout Ratio (太高>80%→危险, 太低<20%→增长潜力)
+├── 增长记录: 连续增长年数 + 5年CAGR
+├── FCF覆盖率: FCF/Dividend (>1.5=安全, <1.0=危险)
+└── 行业比较: vs 同行股息率
+
+🔵 强制引用规则:
+   Buffett: 股息20年+持续增长 = 管理层纪律和诚信的证明
+   Graham: 稳定的股息是"安全边际"的一部分
+   Risk Manager: 股息=现金流缓冲, 降低下行风险
+```
+
+---
+
+## 🟢 ESG Screening — 附加分（不参与核心投票）
+
+> ⚠️ **ESG是加分项，不是否决项。不达标不影响投票结果。**
+
+```
+ESG评分机制:
+├── E (环境): 碳排放/清洁能源使用/废弃物管理
+├── S (社会): 员工安全/供应链人权/社区关系
+└── G (治理): 董事会独立性/高管薪酬合理性/股东权利
+
+🟢 附加分规则:
+   总分≥70/100 → ESG Bonus +1票 (仅影响最终推荐的倾向, 不改变委员会投票结果)
+   总分<70 → 无影响 (不扣分，不阻止买入)
+   
+⚠️ 为什么是附加分而非考核指标?
+   1. 投资价值由基本面驱动，ESG是锦上添花
+   2. ESG评级体系不成熟，标准差异大
+   3. 有些优质企业（如油气、矿业）ESG天生低分
+   4. ESG不应成为"不买好公司"的借口
+```
 
 ---
 
@@ -1155,8 +1277,8 @@ Monitor drift, signal-based targets, urgency classification
 ### 4. Tax Optimization (`tax_optimizer.py`)
 Tax-loss harvesting, wash sale detection, year-end strategy
 
-### 5. ESG Screening (`esg_screener.py`)
-Environmental, Social, Governance scoring (0-10)
+### 5. ESG Screening 🟢 Bonus (`esg_screener.py`)
+ESG评分 — 附加加分项(见上方ESG规则)，不参与核心投票，达标+1票bonus
 
 ### 6. Hot & Rumor Scanner (`hot_rumor_scanner.py`)
 Trending stocks/crypto, M&A rumors, insider activity detection
@@ -1190,7 +1312,7 @@ ai-hedge-fund/
 ├── backtest_engine.py                # Backtest engine
 ├── rebalance_monitor.py              # Rebalancing alerts
 ├── tax_optimizer.py                  # Tax-loss harvesting
-├── esg_screener.py                   # ESG screening
+├── esg_screener.py                   # 🟢 ESG bonus scoring (not core voting)
 ├── hot_rumor_scanner.py              # Market intelligence
 ├── news_analyst.py                   # News analysis pipeline
 ├── smart_data_fetcher.py             # Data retrieval (multi-source)
